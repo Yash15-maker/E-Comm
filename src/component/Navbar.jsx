@@ -34,16 +34,7 @@ const Navbar = () => {
                   Products
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/about">
-                  About
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/contact">
-                  Contact
-                </NavLink>
-              </li>
+             
             </ul>
             <div className="buttons">
                 <NavLink to="/login" className="btn btn-outline-dark">
