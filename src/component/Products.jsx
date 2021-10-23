@@ -1,6 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { ButtonGroup, Button ,Box} from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import Paper from "@mui/material/Paper";
+
+import Typography from "@mui/material/Typography";
+
+import Grid from "@mui/material/Grid";
+
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -29,58 +47,92 @@ const Products = () => {
 
   const Loading = () => {
     return (
-    <>
+      <>
         <div className="col-md-3">
-            <Skeleton height={350}/>
+          <Skeleton height={350} />
         </div>
         <div className="col-md-3">
-            <Skeleton height={350}/>
+          <Skeleton height={350} />
         </div>
         <div className="col-md-3">
-            <Skeleton height={350}/>
+          <Skeleton height={350} />
         </div>
         <div className="col-md-3">
-            <Skeleton height={350}/>
+          <Skeleton height={350} />
         </div>
-    </>
+      </>
     );
   };
 
   const filterProduct = (cat) => {
-      const updatedList = data.filter((x)=>x.category === cat);
-      setFilter(updatedList);
-  }
+    const updatedList = data.filter((x) => x.category === cat);
+    setFilter(updatedList);
+  };
 
   const ShowProducts = () => {
     return (
       <>
-        <div className="buttons d-flex justify-content-center mb-5 pb-5">
-          <button className="btn btn-outline-dark me-2" onClick={()=>setFilter(data)}>All</button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("men's clothing")}>Men's Clothing</button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("women's clothing")}>
-            Women's Clothing
-          </button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("jewelery")}>Jewelery</button>
-          <button className="btn btn-outline-dark me-2" onClick={()=>filterProduct("electronics")}>Electronic</button>
-        </div>
+        <center>
+          <ButtonGroup
+            variant="contained"
+            aria-label="outlined primary button group"
+          >
+            <Button onClick={() => setFilter(data)}>All</Button>
+            <Button onClick={() => filterProduct("men's clothing")}>
+              Men's Clothing
+            </Button>
+            <Button onClick={() => filterProduct("women's clothing")}>
+              Women's Clothing
+            </Button>
+            <Button onClick={() => filterProduct("jewelery")}>Jewelery</Button>
+            <Button onClick={() => filterProduct("electronics")}>
+              Electronic
+            </Button>
+          </ButtonGroup>
+        </center>
         {filter.map((product) => {
           return (
-            <>
-              <div className="col-md-3 mb-4">
-                <div class="card h-100 text-center p-4" key={product.id}>
-                  <img src={product.image} class="card-img-top" alt={product.title} height="250px" />
-                  <div class="card-body">
-                    <h5 class="card-title mb-0">{product.title.substring(0,12)}...</h5>
-                    <p class="card-text lead fw-bold">
-                      ${product.price}
-                    </p>
-                    <NavLink to={`/products/${product.id}`} class="btn btn-outline-dark">
-                      Buy Now
-                    </NavLink>
-                  </div>
-                </div>
-              </div>
-            </>
+            <div style={{marginTop: "50px"}}>
+              <Grid
+  container
+  direction="row"
+  justifyContent="space-around"
+  alignItems="center"
+>
+                    <React.Fragment>
+                      <Grid item xs={4}>
+                        <Item>
+                          <Card sx={{ maxWidth: 500 }}>
+                            <img
+                              height="140px"
+                              src={product.image}
+                              alt={product.title}
+                            />
+                            <CardContent>
+                              <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="div"
+                              >
+                                {product.title.substring(0, 12)}
+                              </Typography>
+                            </CardContent>
+                            <CardActions>
+                              <Button size="small"> ${product.price}</Button>
+                            </CardActions>
+                            <NavLink
+                              to={`/products/${product.id}`}
+                              class="btn btn-outline-red"
+                            >
+                              <span style={{ fontSize: "25px" }}> Buy Now</span>
+                            </NavLink>
+                          </Card>
+                        </Item>
+                      </Grid>
+                    </React.Fragment>
+                  </Grid>
+            
+            </div>
           );
         })}
       </>
@@ -104,3 +156,4 @@ const Products = () => {
 };
 
 export default Products;
+
